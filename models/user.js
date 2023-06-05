@@ -1,4 +1,5 @@
 'use strict';
+const { hashSync } = require('bcryptjs');
 const {
   Model
 } = require('sequelize');
@@ -15,10 +16,17 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init({
     name: DataTypes.STRING,
+    password: DataTypes.STRING,
     is_admin: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'User',
   });
+
+  // use Hook for bycrypt password
+  User.beforeCreate((user) => {
+    const hash = hashSync(user.password, 10);
+    user.password = hash
+  })
   return User;
 };

@@ -1,20 +1,22 @@
-const express = require('express');
-const cors = require('cors');
-const app = express();
-const port = 3000;
+require('dotenv').config()
+const express = require('express')
+const app = express()
+const port = 3000
 
-// Middleware
-app.use(express.json());
-app.use(cors());
+const cors = require('cors')
 
-// Routes
-const userRoutes = require('./routes/userRoutes');
-const authRoutes = require('./routes/authRoutes');
+const router = require('./routes')
 
-app.use('/users', userRoutes);
-app.use('/authentication', authRoutes);
+app.use(cors())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
-// Server
+app.get('/', (_req, res) => {
+  res.send('API Success')
+})
+
+app.use('/', router)
+
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+  console.log(`Server is running on port ${port}`)
+})
