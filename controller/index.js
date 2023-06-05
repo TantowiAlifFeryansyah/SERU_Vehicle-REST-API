@@ -60,9 +60,9 @@ class Controller {
         const userId = req.params.id;
         try {
             const data = await User.findByPk(userId)
-            if(data){
-            res.status(200).json({ message: 'Get Data', data })
-            }else {
+            if (data) {
+                res.status(200).json({ message: 'Get Data', data })
+            } else {
                 res.status(200).json({ message: 'User not found', data })
             }
         } catch (error) {
@@ -71,7 +71,30 @@ class Controller {
         }
     }
 
+    static async update(req, res, next) {
+        try {
+            const { id } = req.params
+            const { name, is_admin } = req.body
+            const data = await User.update({ name, is_admin }, {
+                where: { id }
+            })
+            res.status(200).json({ message: 'Uppdating user successfully.', data })
+        } catch (error) {
+            console.error('error upddating:', error);
+            next(error)
+        }
+    }
 
+    static async delete(req, res, next) {
+        try {
+            const { id } = req.params
+            const data = await User.destroy({ where: { id } })
+            res.status(200).json({ message: 'User deleted successfully.', data })
+        } catch (error) {
+            console.error('error deleting:', error);
+            next(error)
+        }
+    }
 
 }
 

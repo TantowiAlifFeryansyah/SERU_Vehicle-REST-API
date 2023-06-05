@@ -8,25 +8,22 @@ const controller = require('../controller')
 
 // GET /users
 router.get('/users', controller.getData);
+
+// GET /users/:id
 router.get('/users/:id', controller.getDataId);
 
 // GET /users/register
 router.post('/users/register', controller.register);
 
-// GET /users/login
+// GET /users/login || // POST /users
 router.post('/users/login', controller.login);
-// router.use(authentication)
-
-
-// GET /users/:id
-
-// POST /users
+router.use(authentication)
 
 // PATCH /users/:id
-// router.patch('/users/:id', controller.update);
+router.patch('/users/:id', controller.update);
 
-/// DELETE /users/:id
-// router.post('/users/:id', controller.delete);
+// / DELETE /users/:id
+router.delete('/users/:id', controller.delete);
 
 module.exports = router;
 
