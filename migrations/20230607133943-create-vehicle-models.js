@@ -2,26 +2,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Pricelists', {
+    await queryInterface.createTable('Vehicle_models', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      year_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Vehicle_years",
-          key: "id"
-        },
-        onUpdate: "cascade",
-        onDelete: "cascade",
+      name: {
+        type: Sequelize.STRING
       },
-      model_id: {
+      type_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "Vehicle_models",
+          model: "Vehicle_types",
           key: "id"
         },
         onUpdate: "cascade",
@@ -38,6 +33,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Pricelists');
+    await queryInterface.dropTable('Vehicle_models');
   }
 };

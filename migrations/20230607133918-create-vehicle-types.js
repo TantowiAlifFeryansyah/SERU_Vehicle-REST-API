@@ -13,6 +13,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       brand_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: "Vehicle_brands",

@@ -1,18 +1,14 @@
-const { request } = require('express');
-const jwt = require('jsonwebtoken');
-const {User} = require('../models')
-
-async function authentication(req, res, next){
+async function authorization(req, res, next) {
     try {
-        const {aksestoken} = req.headers
-        const payload = jwt.verify(aksestoken, process.env.key)
-        const data = await User.findOne({where: {name: payload.user}})
-        req.user = {id: data.dataValues.id, name: data.dataValues.name}
-        next()
-    }
-    catch(error) {
+        console.log('ini req autorization', req.user);
+        if (req.user.admin) {
+            next()
+        } else {
+            throw ({ name: 'verboden' })
+        }
+    }catch (error) {
         next(error)
     }
 }
 
-module.exports = authentication;
+module.exports = authorization;
