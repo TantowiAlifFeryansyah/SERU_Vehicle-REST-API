@@ -1,7 +1,7 @@
 async function errorHandler(error, req, res, next) {
     try {
         if (error.name === "verboden") {
-            res.status(403).json({ message: 'bukan admin' })
+            res.status(403).json({ message: 'inaccessible' })
         }
     } catch (error) {
         next(error)

@@ -16,10 +16,12 @@ router.patch('/users/:id', controller.update);
 router.delete('/users/:id', controller.delete);
 // GET /users
 router.get('/users', controller.getUser);
-// GET /users/vehicle
-router.get('/users/vehicle', controller.getVehicle);
 // GET /users/:id
 router.get('/users/:id', controller.getUserId);
+// GET /users/vehicle
+router.get('/users/vehicle', controller.getVehicle);
+// GET /users/vehicle/:id
+router.get('/users/vehicle/:id', controller.getVehicleId);
 // POST /users/vehicle
 router.post('/users/vehicle-create',authorization, controller.createVehicle);
 router.use(errorHandler)

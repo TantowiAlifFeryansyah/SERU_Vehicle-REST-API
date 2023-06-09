@@ -81,8 +81,8 @@ class Controller {
     }
 
     static async getUserId(req, res, next) {
-        const userId = req.params.id;
         try {
+            const userId = req.params.id;
             const data = await User.findByPk(userId)
             if (data) {
                 res.status(200).json({ message: 'Get Data', data })
@@ -97,10 +97,7 @@ class Controller {
 
     static async createVehicle(req, res, next) {
         try {
-            console.log('masuk vehicle');
             const { vehicleBrand, vehicleType, vehicleModel, vehicleYear } = req.body
-            console.log('masuk vehicle');
-
             const brand = await Vehicle_brands.create({ name: vehicleBrand });
             const type = await Vehicle_types.create({ name: vehicleType, brand_id: brand.id });
             const model = await Vehicle_models.create({ name: vehicleModel, type_id: type.id });
@@ -115,8 +112,6 @@ class Controller {
 
     static async getVehicle(req, res, next) {
         try {
-            console.log('masuk get vehicle');
-
             const brand = await Vehicle_brands.findAll({
                 include: [
                     {
@@ -135,16 +130,40 @@ class Controller {
                     },
                 ],
             })
-
-            res.status(200).json({ message: 'Get User', brand })
-
+            res.status(200).json({ message: 'Get Vehicle', brand })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
         }
-
     }
 
+    static async getVehicleId(req, res, next) {
+        try {
+            const vehicleId = req.params.id;
+            const brand = await Vehicle_brands.findByPk(vehicleId, {
+                include: [
+                    {
+                        model: Vehicle_types,
+                        include: [
+                            {
+                                model: Vehicle_models,
+                                include: [
+                                    {
+                                        model: Pricelist,
+                                        include: [Vehicle_years],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            })
+            res.status(200).json({ message: 'Get Vehicle', brand })
+        } catch (error) {
+            console.error('Internal server error:', error);
+            next(error)
+        }
+    }
 
 
 }
