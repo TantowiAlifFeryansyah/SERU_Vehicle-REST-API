@@ -110,6 +110,51 @@ class Controller {
         }
     }
 
+    static async updateVehicle(req, res, next) {
+        try {
+            const { id } = req.params
+            const { vehicleBrand, vehicleType, vehicleModel, vehicleYear } = req.body
+            const brand = await Vehicle_brands.findByPk(id);
+            const type = await Vehicle_types.findOne({ where: { brand_id: brand.id } });
+            const model = await Vehicle_models.findOne({ where: { type_id: type.id } });
+            const year = await Vehicle_years.findOne({id: brand.id});
+            const price = await Pricelist.findOne({ where: { year_id: year.id } });
+
+            await brand.update({ name: vehicleBrand });
+            await type.update({ name: vehicleType});
+            await model.update({ name: vehicleModel});
+            await year.update({ name: vehicleYear });
+
+            res.status(200).json({ message: 'Vehicle updated successfully'})
+        } catch (error) {
+            console.error('Error updating vehicle:', error);
+            next(error)
+        }
+    }
+
+    static async deleteVehicle(req, res, next) {
+        try {
+            console.log('update masuk');
+            const { id } = req.params
+            const { vehicleBrand, vehicleType, vehicleModel, vehicleYear } = req.body
+            const brand = await Vehicle_brands.findByPk(id);
+            const type = await Vehicle_types.findOne({ where: { brand_id: brand.id } });
+            const model = await Vehicle_models.findOne({ where: { type_id: type.id } });
+            const year = await Vehicle_years.findOne({id: brand.id});
+            const price = await Pricelist.findOne({ where: { year_id: year.id } });
+
+            await brand.update({ name: vehicleBrand });
+            await type.update({ name: vehicleType});
+            await model.update({ name: vehicleModel});
+            await year.update({ name: vehicleYear });
+
+            res.status(200).json({ message: 'Vehicle updated successfully'})
+        } catch (error) {
+            console.error('Error updating vehicle:', error);
+            next(error)
+        }
+    }
+
     static async getVehicle(req, res, next) {
         try {
             const brand = await Vehicle_brands.findAll({
@@ -164,6 +209,7 @@ class Controller {
             next(error)
         }
     }
+
 
 
 }

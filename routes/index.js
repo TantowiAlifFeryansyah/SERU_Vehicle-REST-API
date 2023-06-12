@@ -24,6 +24,8 @@ router.get('/users/vehicle', controller.getVehicle);
 router.get('/users/vehicle/:id', controller.getVehicleId);
 // POST /users/vehicle
 router.post('/users/vehicle-create',authorization, controller.createVehicle);
+// PATCH /users/vehicle/:id
+router.patch('/users/vehicle-update/:id',authorization, controller.updateVehicle);
 router.use(errorHandler)
 
 
