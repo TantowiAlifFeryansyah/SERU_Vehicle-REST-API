@@ -70,10 +70,8 @@ class Controller {
 
     static async getUser(req, res, next) {
         try {
-            console.log('masuk');
             const data = await User.findAll()
             res.status(200).json({ message: 'Get User', data })
-
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
@@ -117,15 +115,15 @@ class Controller {
             const brand = await Vehicle_brands.findByPk(id);
             const type = await Vehicle_types.findOne({ where: { brand_id: brand.id } });
             const model = await Vehicle_models.findOne({ where: { type_id: type.id } });
-            const year = await Vehicle_years.findOne({id: brand.id});
+            const year = await Vehicle_years.findOne({ id: brand.id });
             const price = await Pricelist.findOne({ where: { year_id: year.id } });
 
             await brand.update({ name: vehicleBrand });
-            await type.update({ name: vehicleType});
-            await model.update({ name: vehicleModel});
+            await type.update({ name: vehicleType });
+            await model.update({ name: vehicleModel });
             await year.update({ name: vehicleYear });
 
-            res.status(200).json({ message: 'Vehicle updated successfully'})
+            res.status(200).json({ message: 'Vehicle updated successfully' })
         } catch (error) {
             console.error('Error updating vehicle:', error);
             next(error)
@@ -135,8 +133,8 @@ class Controller {
     static async deleteVehicle(req, res, next) {
         try {
             const { id } = req.params
-            const vehicle = await Vehicle_brands.destroy({ where: { id }});
-            res.status(200).json({ message: 'Vehicle deleted successfully', vehicle})
+            const vehicle = await Vehicle_brands.destroy({ where: { id } });
+            res.status(200).json({ message: 'Vehicle deleted successfully', vehicle })
         } catch (error) {
             console.error('Error deleting:', error);
             next(error)
@@ -145,7 +143,7 @@ class Controller {
 
     static async getVehicle(req, res, next) {
         try {
-            const brand = await Vehicle_brands.findAll({
+            const brands = await Vehicle_brands.findAll({
                 include: [
                     {
                         model: Vehicle_types,
@@ -163,7 +161,7 @@ class Controller {
                     },
                 ],
             })
-            res.status(200).json({ message: 'Get Vehicle', brand })
+            res.status(200).json({ message: 'Get Vehicle', brands })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
@@ -191,13 +189,118 @@ class Controller {
                     },
                 ],
             })
-            res.status(200).json({ message: 'Get Vehicle', brand })
+            res.status(200).json({ message: 'Get Vehicle By Id', brand })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
         }
     }
 
+    static async getVehicleBrand(req, res, next) {
+        try {
+            const data = await Vehicle_brands.findAll()
+            res.status(200).json({ message: 'Get Vehicle Brands', data })
+        } catch (error) {
+            console.error('Internal server error:', error);
+            next(error)
+        }
+    }
+
+    static async getVehicleType(req, res, next) {
+        try {
+            const data = await Vehicle_types.findAll()
+            res.status(200).json({ message: 'Get Vehicle Types', data })
+        } catch (error) {
+            console.error('Internal server error:', error);
+            next(error)
+        }
+    }
+
+    static async getVehicleModel(req, res, next) {
+        try {
+            const data = await Vehicle_models.findAll()
+            res.status(200).json({ message: 'Get Vehicle Models', data })
+        } catch (error) {
+            console.error('Internal server error:', error);
+            next(error)
+        }
+    }
+
+    static async getVehicleYear(req, res, next) {
+        try {
+            const data = await Vehicle_years.findAll()
+            res.status(200).json({ message: 'Get Vehicle Years', data })
+        } catch (error) {
+            console.error('Internal server error:', error);
+            next(error)
+        }
+    }
+
+    static async getVehiclePricelist(req, res, next) {
+        try {
+            const data = await Pricelist.findAll()
+            res.status(200).json({ message: 'Get Vehicle Pricelist', data })
+        } catch (error) {
+            console.error('Internal server error:', error);
+            next(error)
+        }
+    }
+
+    static async updateVehicleBrand(req, res, next) {
+        try {
+            const { id } = req.params
+            const { name } = req.body
+            const data = await Vehicle_brands.update({ name }, {
+                where: { id }
+            })
+            res.status(200).json({ message: 'Update Vehicle Brands', data });
+        } catch (error) {
+            console.error('Internal server error:', error);
+            next(error)
+        }
+    }
+
+    static async updateVehicleType(req, res, next) {
+        try {
+            const { id } = req.params
+            const { name } = req.body
+            const data = await Vehicle_types.update({ name }, {
+                where: { id }
+            })
+            res.status(200).json({ message: 'Update Vehicle Type', data });
+        } catch (error) {
+            console.error('Internal server error:', error);
+            next(error)
+        }
+    }
+
+    static async updateVehicleModel(req, res, next) {
+        try {
+            const { id } = req.params
+            const { name } = req.body
+            const data = await Vehicle_models.update({ name }, {
+                where: { id }
+            })
+            res.status(200).json({ message: 'Update Vehicle Model', data });
+        } catch (error) {
+            console.error('Internal server error:', error);
+            next(error)
+        }
+    }
+
+    static async updateVehicleYear(req, res, next) {
+        try {
+            const { id } = req.params
+            const { name } = req.body
+            const data = await Vehicle_years.update({ name }, {
+                where: { id }
+            })
+            res.status(200).json({ message: 'Update Vehicle Year', data });
+        } catch (error) {
+            console.error('Internal server error:', error);
+            next(error)
+        }
+    }
 
 
 }
