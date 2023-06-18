@@ -1,0 +1,17 @@
+[
+    {
+        "id": 2,
+        "name": "Sedan",
+        "brand_id": 3
+    },
+    {
+        "id": 3,
+        "name": "Hatchback",
+        "brand_id": 4
+    },
+    {
+        "id": 1,
+        "name": "SUV",
+        "brand_id": 2
+    }
+]

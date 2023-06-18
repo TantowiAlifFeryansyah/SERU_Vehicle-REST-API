@@ -61,7 +61,7 @@ class Controller {
         try {
             const { id } = req.params
             const data = await User.destroy({ where: { id } })
-            res.status(200).json({ message: 'User deleted successfully.', data })
+            res.status(200).json({ message: 'User deleted successfully.',data })
         } catch (error) {
             console.error('error deleting:', error);
             next(error)
@@ -70,8 +70,15 @@ class Controller {
 
     static async getUser(req, res, next) {
         try {
+            const page = parseInt(req.query.page) || 1
+            const limit = 3
+            const offset = (page - 1) * limit
+        
+            const total = await User.count()
+            const pages = Math.ceil(total / limit)
+
             const data = await User.findAll()
-            res.status(200).json({ message: 'Get User', data })
+            res.status(200).json({ message: 'Get User',total, pages, offset, data })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
@@ -80,10 +87,17 @@ class Controller {
 
     static async getUserId(req, res, next) {
         try {
+            const page = parseInt(req.query.page) || 1
+            const limit = 3
+            const offset = (page - 1) * limit
+        
+            const total = await User.count()
+            const pages = Math.ceil(total / limit)
+
             const userId = req.params.id;
             const data = await User.findByPk(userId)
             if (data) {
-                res.status(200).json({ message: 'Get Data', data })
+                res.status(200).json({ message: 'Get Data',total, pages, offset, data })
             } else {
                 res.status(200).json({ message: 'User not found', data })
             }
@@ -143,6 +157,13 @@ class Controller {
 
     static async getVehicle(req, res, next) {
         try {
+            const page = parseInt(req.query.page) || 1
+            const limit = 3
+            const offset = (page - 1) * limit
+        
+            const total = await Vehicle_brands.count()
+            const pages = Math.ceil(total / limit)
+
             const brands = await Vehicle_brands.findAll({
                 include: [
                     {
@@ -161,7 +182,7 @@ class Controller {
                     },
                 ],
             })
-            res.status(200).json({ message: 'Get Vehicle', brands })
+            res.status(200).json({ message: 'Get Vehicle',total, pages, offset, brands })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
@@ -170,6 +191,13 @@ class Controller {
 
     static async getVehicleId(req, res, next) {
         try {
+            const page = parseInt(req.query.page) || 1
+            const limit = 3
+            const offset = (page - 1) * limit
+        
+            const total = await Vehicle_brands.count()
+            const pages = Math.ceil(total / limit)
+
             const vehicleId = req.params.id;
             const brand = await Vehicle_brands.findByPk(vehicleId, {
                 include: [
@@ -189,7 +217,7 @@ class Controller {
                     },
                 ],
             })
-            res.status(200).json({ message: 'Get Vehicle By Id', brand })
+            res.status(200).json({ message: 'Get Vehicle By Id',total, pages, offset, brand })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
@@ -198,8 +226,15 @@ class Controller {
 
     static async getVehicleBrand(req, res, next) {
         try {
+            const page = parseInt(req.query.page) || 1
+            const limit = 3
+            const offset = (page - 1) * limit
+        
+            const total = await Vehicle_brands.count()
+            const pages = Math.ceil(total / limit)
+
             const data = await Vehicle_brands.findAll()
-            res.status(200).json({ message: 'Get Vehicle Brands', data })
+            res.status(200).json({ message: 'Get Vehicle Brands',total, pages, offset, data })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
@@ -208,8 +243,15 @@ class Controller {
 
     static async getVehicleType(req, res, next) {
         try {
+            const page = parseInt(req.query.page) || 1
+            const limit = 3
+            const offset = (page - 1) * limit
+        
+            const total = await Vehicle_types.count()
+            const pages = Math.ceil(total / limit)
+
             const data = await Vehicle_types.findAll()
-            res.status(200).json({ message: 'Get Vehicle Types', data })
+            res.status(200).json({ message: 'Get Vehicle Types',total, pages, offset, data })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
@@ -218,8 +260,15 @@ class Controller {
 
     static async getVehicleModel(req, res, next) {
         try {
+            const page = parseInt(req.query.page) || 1
+            const limit = 3
+            const offset = (page - 1) * limit
+        
+            const total = await Vehicle_models.count()
+            const pages = Math.ceil(total / limit)
+
             const data = await Vehicle_models.findAll()
-            res.status(200).json({ message: 'Get Vehicle Models', data })
+            res.status(200).json({ message: 'Get Vehicle Models',total, pages, offset, data })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
@@ -228,8 +277,15 @@ class Controller {
 
     static async getVehicleYear(req, res, next) {
         try {
+            const page = parseInt(req.query.page) || 1
+            const limit = 3
+            const offset = (page - 1) * limit
+        
+            const total = await Vehicle_years.count()
+            const pages = Math.ceil(total / limit)
+
             const data = await Vehicle_years.findAll()
-            res.status(200).json({ message: 'Get Vehicle Years', data })
+            res.status(200).json({ message: 'Get Vehicle Years',total, pages, offset, data })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)
@@ -238,8 +294,15 @@ class Controller {
 
     static async getVehiclePricelist(req, res, next) {
         try {
+            const page = parseInt(req.query.page) || 1
+            const limit = 3
+            const offset = (page - 1) * limit
+        
+            const total = await Pricelist.count()
+            const pages = Math.ceil(total / limit)
+
             const data = await Pricelist.findAll()
-            res.status(200).json({ message: 'Get Vehicle Pricelist', data })
+            res.status(200).json({ message: 'Get Vehicle Pricelist',total, pages, offset, data })
         } catch (error) {
             console.error('Internal server error:', error);
             next(error)

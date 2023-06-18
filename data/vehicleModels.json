@@ -1,0 +1,17 @@
+[
+    {
+        "id": 2,
+        "name": "Civic",
+        "type_id": 2
+    },
+    {
+        "id": 3,
+        "name": "Rav4",
+        "type_id": 3
+    },
+    {
+        "id": 1,
+        "name": "Camry",
+        "type_id": 1
+    }
+]
